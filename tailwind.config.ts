@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Warehouse app specific colors
+				available: '#E5FCEC',
+				'available-border': '#A3E9C1',
+				booked: '#E9F0FF', 
+				'booked-border': '#B1C5F6',
+				conflict: '#FFF0F0',
+				'conflict-border': '#FFCDD2',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -70,26 +78,43 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' },
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
-				}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' },
+				},
+				'fade-in': {
+					from: { opacity: '0' },
+					to: { opacity: '1' },
+				},
+				'fade-up': {
+					from: { opacity: '0', transform: 'translateY(10px)' },
+					to: { opacity: '1', transform: 'translateY(0)' },
+				},
+				'scale-in': {
+					from: { opacity: '0', transform: 'scale(0.95)' },
+					to: { opacity: '1', transform: 'scale(1)' },
+				},
+				'blur-in': {
+					from: { opacity: '0', filter: 'blur(8px)' },
+					to: { opacity: '1', filter: 'blur(0)' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.4s ease-out',
+				'fade-up': 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+				'scale-in': 'scale-in 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+				'blur-in': 'blur-in 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+			},
+			boxShadow: {
+				'glass': '0 0 20px rgba(0, 0, 0, 0.03)',
+				'glass-hover': '0 10px 30px rgba(0, 0, 0, 0.05)',
+				'glass-strong': '0 10px 40px rgba(0, 0, 0, 0.08)',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
