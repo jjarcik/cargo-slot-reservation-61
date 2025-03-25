@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     react({
       // Add babel plugins for Lingui macros support
       plugins: [
-        ['macros']
+        ['macros', {}]  // Added empty config object as second element
       ]
     }),
     mode === 'development' &&
