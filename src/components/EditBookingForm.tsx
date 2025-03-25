@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Booking } from '@/utils/types';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,6 +26,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Save, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { Trans } from '@lingui/macro';
 
 interface EditBookingFormProps {
   booking: Booking;
@@ -65,13 +65,11 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Update booking with new values
     const updatedBooking: Booking = {
       ...booking,
       ...values,
     };
     
-    // Simple time validation
     if (values.startTime >= values.endTime) {
       toast.error('End time must be after start time');
       return;
@@ -84,9 +82,9 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
   return (
     <div>
       <DialogHeader className="pb-4">
-        <DialogTitle>Edit Booking</DialogTitle>
+        <DialogTitle><Trans>Edit Booking</Trans></DialogTitle>
         <DialogDescription>
-          Update the booking information below.
+          <Trans>Update the booking information below.</Trans>
         </DialogDescription>
       </DialogHeader>
 
@@ -98,7 +96,7 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               name="company"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Company</FormLabel>
+                  <FormLabel><Trans>Company</Trans></FormLabel>
                   <FormControl>
                     <Input placeholder="Company name" {...field} />
                   </FormControl>
@@ -112,7 +110,7 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               name="portId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Bay</FormLabel>
+                  <FormLabel><Trans>Bay</Trans></FormLabel>
                   <Select 
                     onValueChange={field.onChange} 
                     defaultValue={field.value}
@@ -142,7 +140,7 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               name="startTime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Start Time</FormLabel>
+                  <FormLabel><Trans>Start Time</Trans></FormLabel>
                   <Select 
                     onValueChange={field.onChange} 
                     defaultValue={field.value}
@@ -170,7 +168,7 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               name="endTime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>End Time</FormLabel>
+                  <FormLabel><Trans>End Time</Trans></FormLabel>
                   <Select 
                     onValueChange={field.onChange} 
                     defaultValue={field.value}
@@ -200,7 +198,7 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               name="cargoType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cargo Type</FormLabel>
+                  <FormLabel><Trans>Cargo Type</Trans></FormLabel>
                   <FormControl>
                     <Input placeholder="Cargo type" {...field} />
                   </FormControl>
@@ -214,7 +212,7 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               name="vehicleType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Vehicle Type</FormLabel>
+                  <FormLabel><Trans>Vehicle Type</Trans></FormLabel>
                   <FormControl>
                     <Input placeholder="Vehicle type" {...field} />
                   </FormControl>
@@ -244,7 +242,7 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               name="contactName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Contact Name</FormLabel>
+                  <FormLabel><Trans>Contact Name</Trans></FormLabel>
                   <FormControl>
                     <Input placeholder="Contact name" {...field} />
                   </FormControl>
@@ -258,7 +256,7 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               name="contactPhone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Contact Phone</FormLabel>
+                  <FormLabel><Trans>Contact Phone</Trans></FormLabel>
                   <FormControl>
                     <Input placeholder="Contact phone" {...field} />
                   </FormControl>
@@ -294,14 +292,14 @@ const EditBookingForm: React.FC<EditBookingFormProps> = ({ booking, onSave, onCa
               className="flex items-center gap-1"
             >
               <X className="h-4 w-4" />
-              Cancel
+              <Trans>Cancel</Trans>
             </Button>
             <Button 
               type="submit"
               className="flex items-center gap-1"
             >
               <Save className="h-4 w-4" />
-              Save Changes
+              <Trans>Save Changes</Trans>
             </Button>
           </div>
         </form>

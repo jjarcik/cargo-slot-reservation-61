@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { CalendarClock, Package } from 'lucide-react';
+import { Trans } from '@lingui/macro';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Header: React.FC = () => {
   return (
@@ -10,9 +12,12 @@ const Header: React.FC = () => {
           <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center mr-3">
             <Package className="h-5 w-5 text-primary" />
           </div>
-          <h1 className="text-2xl font-semibold text-gray-900">Cargo Bay Scheduler</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">
+            <Trans>Cargo Bay Scheduler</Trans>
+          </h1>
         </div>
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-3">
+          <LanguageSwitcher />
           <div className="flex items-center text-sm bg-white/70 backdrop-blur-sm border border-border px-3 py-1.5 rounded-lg shadow-sm">
             <CalendarClock className="h-4 w-4 text-primary mr-2" />
             <span className="font-medium">

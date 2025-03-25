@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import EditBookingForm from './EditBookingForm';
 import { Button } from '@/components/ui/button';
+import { Trans } from '@lingui/macro';
 
 interface BookingModalProps {
   booking: Booking | null;
@@ -73,7 +74,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
                 <StatusBadge status={booking.status} />
               </div>
               <DialogDescription className="text-sm text-muted-foreground">
-                Booking details for cargo offloading
+                <Trans>Booking details for cargo offloading</Trans>
               </DialogDescription>
             </DialogHeader>
 
@@ -81,14 +82,14 @@ const BookingModal: React.FC<BookingModalProps> = ({
               <div className="bg-conflict/50 border border-conflict-border rounded-lg p-3 mb-4 flex gap-3 items-center">
                 <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0" />
                 <p className="text-sm text-red-800">
-                  This booking conflicts with another reservation during the same time slot.
+                  <Trans>This booking conflicts with another reservation during the same time slot.</Trans>
                 </p>
               </div>
             )}
 
             <div className="grid gap-4">
               <div className="glass-panel p-4">
-                <h3 className="font-medium mb-3">Delivery Information</h3>
+                <h3 className="font-medium mb-3"><Trans>Delivery Information</Trans></h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-primary" />
@@ -123,7 +124,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
               </div>
 
               <div className="glass-panel p-4">
-                <h3 className="font-medium mb-3">Contact Information</h3>
+                <h3 className="font-medium mb-3"><Trans>Contact Information</Trans></h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <Building className="h-4 w-4 text-primary" />
@@ -148,7 +149,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
                 className="flex items-center gap-1"
               >
                 <Edit className="h-4 w-4" />
-                Edit Booking
+                <Trans>Edit Booking</Trans>
               </Button>
             </div>
           </>
