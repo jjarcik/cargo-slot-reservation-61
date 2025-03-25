@@ -1,14 +1,13 @@
 
-import styled, { css } from 'styled-components';
-import type { DefaultTheme } from 'styled-components';
+import { css, FlattenSimpleInterpolation } from 'styled-components';
 
 /**
  * A utility function to conditionally apply styles in styled-components
  */
 export const applyStyles = (
-  styles: ReturnType<typeof css> | string,
+  styles: FlattenSimpleInterpolation | string,
   condition: boolean
-): ReturnType<typeof css> | string => (condition ? styles : '');
+): FlattenSimpleInterpolation | string => (condition ? styles : '');
 
 /**
  * A utility function to join classNames conditionally
