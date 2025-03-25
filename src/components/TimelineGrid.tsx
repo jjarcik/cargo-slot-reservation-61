@@ -1,102 +1,11 @@
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { PORTS, TIME_SLOTS, hasBookingAtTime } from '@/utils/data';
 import { Booking } from '@/utils/types';
 import BookingSlot from './BookingSlot';
 import BookingModal from './BookingModal';
 import { Clock } from 'lucide-react';
-
-const GridContainer = styled.div`
-  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-`;
-
-const ScrollContainer = styled.div`
-  display: flex;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-`;
-
-const TimeColumn = styled.div`
-  flex-shrink: 0;
-  padding-right: 1rem;
-  padding-top: 4rem;
-`;
-
-const TimeBox = styled.div`
-  width: 5rem;
-`;
-
-const TimeRow = styled.div`
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`;
-
-const TimeLabel = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  color: #6B7280;
-  font-weight: 500;
-`;
-
-const ClockIcon = styled.span`
-  margin-right: 0.25rem;
-  height: 0.75rem;
-  width: 0.75rem;
-`;
-
-const PortColumn = styled.div`
-  flex-shrink: 0;
-  width: 16rem;
-  padding-left: 1rem;
-
-  &:first-child {
-    padding-left: 0;
-  }
-`;
-
-const PortHeader = styled.div`
-  background-color: #FFFFFF;
-  border-radius: 0.75rem;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  height: 4rem;
-  margin-bottom: 0.75rem;
-  padding: 0.75rem;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  backdrop-filter: blur(8px);
-  box-shadow: ${({ theme }) => theme.shadows.glass};
-`;
-
-const PortTitle = styled.div`
-  font-weight: 600;
-`;
-
-const PortDescription = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-  color: #6B7280;
-`;
-
-interface TimeSlotRowProps {
-  isEvenHour: boolean;
-}
-
-const TimeSlotRow = styled.div<TimeSlotRowProps>`
-  height: 3rem;
-  border-top: 1px solid ${props => props.isEvenHour ? '#E5E7EB' : '#F3F4F6'};
-  position: relative;
-`;
-
-const BookingSlotWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 10;
-`;
+import { cn } from '@/lib/utils';
 
 const TimelineGrid: React.FC = () => {
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
@@ -113,65 +22,69 @@ const TimelineGrid: React.FC = () => {
   };
 
   return (
-    <GridContainer>
-      <ScrollContainer>
+    <div className="animate-fade-up">
+      <div className="flex overflow-x-auto pb-4">
         {/* Time column */}
-        <TimeColumn>
-          <TimeBox>
+        <div className="flex-shrink-0 pr-4 pt-16">
+          <div className="w-20">
             {TIME_SLOTS.map((time, index) => (
-              <TimeRow key={`time-${index}`}>
-                <TimeLabel>
-                  <ClockIcon>
-                    <Clock size={12} />
-                  </ClockIcon>
+              <div key={`time-${index}`} className="h-12 flex items-center justify-end">
+                <div className="flex items-center text-sm text-gray-500 font-medium">
+                  <Clock className="h-3 w-3 mr-1" />
                   {time}
-                </TimeLabel>
-              </TimeRow>
+                </div>
+              </div>
             ))}
-          </TimeBox>
-        </TimeColumn>
+          </div>
+        </div>
 
         {/* Port columns */}
-        {PORTS.map((port) => (
-          <PortColumn key={port.id}>
-            <PortHeader>
-              <PortTitle>{port.name}</PortTitle>
-              <PortDescription>{port.description}</PortDescription>
-            </PortHeader>
+        {PORTS.map((port, portIndex) => (
+          <div key={port.id} className="flex-shrink-0 w-64 first:pl-0 pl-4">
+            <div className="glass-panel h-16 mb-3 p-3 sticky top-0 z-10">
+              <div className="font-semibold">{port.name}</div>
+              <div className="text-xs text-gray-500">{port.description}</div>
+            </div>
             
             {TIME_SLOTS.map((time, timeIndex) => {
               const bookingsAtTime = hasBookingAtTime(port.id, time);
               const isEvenHour = parseInt(time.split(':')[1]) === 0;
               
               return (
-                <TimeSlotRow 
-                  key={`${port.id}-${time}`}
-                  isEvenHour={isEvenHour}
+                <div 
+                  key={`${port.id}-${time}`} 
+                  className={cn(
+                    "h-12 border-t relative",
+                    isEvenHour ? "border-gray-200" : "border-gray-100"
+                  )}
                 >
                   {bookingsAtTime.length > 0 && timeIndex === TIME_SLOTS.findIndex(t => t >= bookingsAtTime[0].startTime) && (
                     bookingsAtTime.map(booking => (
-                      <BookingSlotWrapper key={booking.id}>
+                      <div 
+                        key={booking.id} 
+                        className="absolute left-0 right-0 z-10"
+                      >
                         <BookingSlot 
                           booking={booking} 
                           onClick={handleBookingClick} 
                           isSmall={bookingsAtTime.length > 1}
                         />
-                      </BookingSlotWrapper>
+                      </div>
                     ))
                   )}
-                </TimeSlotRow>
+                </div>
               );
             })}
-          </PortColumn>
+          </div>
         ))}
-      </ScrollContainer>
+      </div>
 
       <BookingModal 
         booking={selectedBooking} 
         isOpen={isModalOpen} 
         onClose={closeModal} 
       />
-    </GridContainer>
+    </div>
   );
 };
 
