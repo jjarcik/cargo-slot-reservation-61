@@ -1,8 +1,8 @@
 
 import React from 'react';
+import styled from 'styled-components';
 import { CheckCircle, AlertTriangle, Clock } from 'lucide-react';
 import { BookingStatus } from '@/utils/types';
-import { cn } from '@/lib/utils';
 
 interface StatusBadgeProps {
   status: BookingStatus;
@@ -10,40 +10,78 @@ interface StatusBadgeProps {
   className?: string;
 }
 
+interface BadgeContainerProps {
+  status: BookingStatus;
+}
+
+const BadgeContainer = styled.span<BadgeContainerProps>`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  border: 1px solid;
+  
+  ${({ status }) => {
+    switch (status) {
+      case 'available':
+        return `
+          background-color: #E5FCEC;
+          color: #1E8449;
+          border-color: #A3E9C1;
+        `;
+      case 'booked':
+        return `
+          background-color: #E9F0FF;
+          color: #2E5AAC;
+          border-color: #B1C5F6;
+        `;
+      case 'conflict':
+        return `
+          background-color: #FFF0F0;
+          color: #C0392B;
+          border-color: #FFCDD2;
+        `;
+      default:
+        return '';
+    }
+  }}
+`;
+
+const IconWrapper = styled.div`
+  height: 14px;
+  width: 14px;
+`;
+
 const StatusBadge: React.FC<StatusBadgeProps> = ({ 
   status, 
   showText = true,
   className 
 }) => {
-  let icon, text, badgeClasses;
+  let icon, text;
 
   switch (status) {
     case 'available':
-      icon = <Clock className="h-3.5 w-3.5" />;
+      icon = <Clock />;
       text = 'Available';
-      badgeClasses = 'bg-available text-green-800 border-available-border';
       break;
     case 'booked':
-      icon = <CheckCircle className="h-3.5 w-3.5" />;
+      icon = <CheckCircle />;
       text = 'Booked';
-      badgeClasses = 'bg-booked text-blue-800 border-booked-border';
       break;
     case 'conflict':
-      icon = <AlertTriangle className="h-3.5 w-3.5" />;
+      icon = <AlertTriangle />;
       text = 'Conflict';
-      badgeClasses = 'bg-conflict text-red-800 border-conflict-border';
       break;
   }
 
   return (
-    <span className={cn(
-      'inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full border',
-      badgeClasses,
-      className
-    )}>
-      {icon}
+    <BadgeContainer status={status} className={className}>
+      <IconWrapper>{icon}</IconWrapper>
       {showText && <span>{text}</span>}
-    </span>
+    </BadgeContainer>
   );
 };
 
