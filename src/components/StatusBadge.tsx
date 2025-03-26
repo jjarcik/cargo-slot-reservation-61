@@ -3,7 +3,6 @@ import React from 'react';
 import { CheckCircle, AlertTriangle, Clock } from 'lucide-react';
 import { BookingStatus } from '@/utils/types';
 import { cn } from '@/lib/utils';
-import { Trans } from '@lingui/macro';
 
 interface StatusBadgeProps {
   status: BookingStatus;
@@ -21,17 +20,17 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({
   switch (status) {
     case 'available':
       icon = <Clock className="h-3.5 w-3.5" />;
-      text = <Trans>Available</Trans>;
+      text = 'Available';
       badgeClasses = 'bg-available text-green-800 border-available-border';
       break;
     case 'booked':
       icon = <CheckCircle className="h-3.5 w-3.5" />;
-      text = <Trans>Booked</Trans>;
+      text = 'Booked';
       badgeClasses = 'bg-booked text-blue-800 border-booked-border';
       break;
     case 'conflict':
       icon = <AlertTriangle className="h-3.5 w-3.5" />;
-      text = <Trans>Conflict</Trans>;
+      text = 'Conflict';
       badgeClasses = 'bg-conflict text-red-800 border-conflict-border';
       break;
   }

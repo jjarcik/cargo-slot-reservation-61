@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -11,12 +10,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    react({
-      // Add babel plugins for Lingui macros support
-      plugins: [
-        ['macros', {}]  // Added empty config object as second element
-      ]
-    }),
+    react(),
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
@@ -24,11 +18,5 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-  },
-  define: {
-    // Add a polyfill for process.env to fix Lingui macro issues
-    'process.env': {},
-    'process.platform': JSON.stringify(''),
-    'process.version': JSON.stringify(''),
   },
 }));

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Booking } from '@/utils/types';
 import StatusBadge from './StatusBadge';
-import { Truck, AlertCircle, Package, Edit } from 'lucide-react';
+import { Truck, AlertCircle, Package } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface BookingSlotProps {
@@ -32,7 +32,7 @@ const BookingSlot: React.FC<BookingSlotProps> = ({ booking, onClick, isSmall = f
   return (
     <div 
       className={cn(
-        'p-2 rounded-lg border cursor-pointer transition-all hover:shadow-md relative overflow-hidden group',
+        'p-2 rounded-lg border cursor-pointer transition-all hover:shadow-md relative overflow-hidden',
         slotClasses[booking.status],
         isSmall ? 'text-xs' : 'text-sm'
       )}
@@ -66,11 +66,6 @@ const BookingSlot: React.FC<BookingSlotProps> = ({ booking, onClick, isSmall = f
           <AlertCircle className="h-4 w-4 text-red-600 animate-pulse" />
         </div>
       )}
-      
-      {/* Edit indicator that appears on hover */}
-      <div className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
-        <Edit className="h-3.5 w-3.5 text-gray-500" />
-      </div>
     </div>
   );
 };
